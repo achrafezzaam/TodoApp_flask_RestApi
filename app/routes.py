@@ -4,7 +4,7 @@ from app import app, db
 from flask import render_template, redirect, url_for, request
 from flask_login import logout_user
 from werkzeug.urls import url_parse
-from app.forms import LoginForm, RegistrationForm, CreateTodo
+from app.forms import LoginForm, RegistrationForm, CreateTodo, UpdateTodo
 from app.models import User, Todo
 
 @app.route('/')
@@ -72,3 +72,23 @@ def dashboard():
 
     return render_template("dashboard.html", title="Dashboard",\
          username=user.username, form=form, todos=todos)
+
+@app.route('/updatetodo/<todo_id>', methods=['GET', 'POST'])
+@login_required
+def updatetodo(todo_id):
+    user = User.query.filter_by(username=current_user.username).first()
+    todo = Todo.query.filter_by(id=todo_id, author=user).first()
+    if not todo:
+        return redirect(url_for('dashboard'))
+    form = UpdateTodo(obj=todo)
+
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        todo.title = title
+        todo.content = content
+        db.session.add(todo)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template("updatetodo.html", title="Uodating the Todo", form=form)
