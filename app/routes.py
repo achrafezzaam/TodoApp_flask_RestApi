@@ -4,8 +4,8 @@ from app import app, db
 from flask import render_template, redirect, url_for, request
 from flask_login import logout_user
 from werkzeug.urls import url_parse
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, CreateTodo
+from app.models import User, Todo
 
 @app.route('/')
 @app.route('/index')
@@ -55,9 +55,20 @@ def logout():
     
     return redirect(url_for('index'))
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     user = User.query.filter_by(username=current_user.username).first()
+    todos = Todo.query.filter_by(author=user).all()
+    form = CreateTodo()
 
-    return render_template("dashboard.html", title="Dashboard", username=user.username)
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        todo = Todo(title=title, content=content, author=user)
+        db.session.add(todo)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template("dashboard.html", title="Dashboard",\
+         username=user.username, form=form, todos=todos)
