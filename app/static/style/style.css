@@ -1,6 +1,83 @@
+/* 
+  F29450 
+  FFC9A3
+  B37447
+*/
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  background-color: #332D24;
+  color: #E6CBA3;
+}
+
+header{
+  display: flex;
+  padding: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul{
+  width: 200px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+header a{
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #E6CBA3;
+}
+
+header ul a{
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 1px solid #F29450;
+  box-shadow: 0 0 2px #F29450;
+}
+
+header ul a:hover{
+  border: none;
+  background-color: #E6CBA3;
+  color: #332D24;
+  box-shadow: none;
+  animation: test_anim 2s linear;
+}
+
+.hero_text{
+  padding: 40px;
+  margin: 20px 5%;
+  height: 300px;
+  background-color: #F29450;
+  color: #332D24;
+  font-weight: 400;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.hero_text:hover{
+  animation: test_anim 2s linear;
+  /* box-shadow: rgba(242, 148, 80, 0.4) 5px 5px, rgba(242, 148, 80, 0.3) 10px 10px, rgba(242, 148, 80, 0.2) 15px 15px, 
+  rgba(242, 148, 80, 0.1) 20px 20px, rgba(242, 148, 80, 0.05) 25px 25px; */
+}
+
+@keyframes test_anim {
+  0%{
+    box-shadow: none;
   }
+  50%{
+    box-shadow: rgba(242, 148, 80) 0px 0px 20px;
+  }
+  100%{
+    box-shadow: none;
+  }
+}
