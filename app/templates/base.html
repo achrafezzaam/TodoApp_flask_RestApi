@@ -9,6 +9,18 @@
     <title>{{ title }} - Todo App-RestApi</title>
 </head>
 <body>
+    <header>
+        <h1><a href="url_for('index')">TODO App</a></h1>
+        <ul>
+            {% if current_user.is_anonymous %}
+            <li><a href="{{url_for('signup')}}">Sign up</a></li>
+            <li><a href="{{url_for('signin')}}">Sign in</a></li>
+            {% else %}
+            <li><a href="{{url_for('dashboard')}}">Dashboard</a></li>
+            <li><a href="{{url_for('logout')}}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </header>
     {% block content %} {% endblock %}
 </body>
 </html>
